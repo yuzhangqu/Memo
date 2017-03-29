@@ -34,3 +34,6 @@ YY表示，最近Bootstrap很火，于是想借助这个玩意儿来美化界面
 - 添加: `$().addClass(XXX)`或`$().toggleClass(XXX, true)`
 - 删除: `$().removeClass(XXX)`或`$().toggleClass(XXX, false)`
 - 开关: `$().toggleClass(XXX)`
+
+### 在`<h1>`标签上注册`onclick`事件需要注意什么？
+这是文本标签，需要小心当文本为空的时候，这个标签占据的空间为0，将会点击不到。
