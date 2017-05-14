@@ -4,4 +4,4 @@
 ```
 	<a class="btn btn-danger" href="#">
 	<i class="fa fa-trash-o fa-lg"></i> Delete</a>
-  ``ß`
+```

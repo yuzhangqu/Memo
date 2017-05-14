@@ -20,5 +20,9 @@ python3 -m venv /path/to/new/virtual/environment
 
 ```
 source /path/to/new/virtual/environment／bin/activate  // 激活
+deactivate  // 去激活
 ```
 ## 安装Django
+```
+pip install Django
+```
