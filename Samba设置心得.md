@@ -7,14 +7,35 @@ sudo mkdir -p /path/to/dir
 sudo chmod 1777 /path/to/dir
 ```
 
+## 建立用户
+```bash
+cut -d: -f1 /etc/passwd		// 列出所有用户
+adduser new_user				// 添加用户
+userdel -r old_user			// 删除用户并删除home目录
+passwd username				// 更改密码
+chsh username					// 更改Shell
+
+cut -d: -f1 /etc/group		// 列出所有组
+usermod -g GROUP username	// 更改用户的组
+```
+
+## 将用户添加到Samba
+```bash
+smbpasswd -a username
+```
+
 ## 配置Samba
 - `[global]`里面保持默认即可
-- `[homes]`注释打开，`browsable = no`
 - 添加自己的目录`[my_share]`
 	- `path = /path/to/share`
-	- `browsable = yes`
+	- `browseable = yes`
 	- `guest ok = yes`
 	- `read only = yes`
-	- `write list = user`
+	- `write list = @users`
 	- `force create mode = 755`
 	- `force directory mode = 0755`
+
+## 重启Samba
+```bash
+systemctl restart smbd.service nmbd.service
+```
