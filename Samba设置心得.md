@@ -39,3 +39,6 @@ smbpasswd -a username
 ```bash
 systemctl restart smbd.service nmbd.service
 ```
+
+## 解决GROUP没有写权限的问题
+编辑`/etc/login.defs`，将`UMASK	`设置为`002`
