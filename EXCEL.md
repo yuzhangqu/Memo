@@ -7,12 +7,12 @@
 ## 打印时每一份序号递增
 ```VB
 Sub 打印()
-Dim startnum, loopnum, N As Long                            '定义变量：起始编码，打印份数和循环值
-loopnum = Application.InputBox(Prompt:="需要打印多少份？")  '定义打印份数
-startnum = 1                                                '起始值
-For N = startnum To startnum + loopnum - 1                  '开始循环
-Range("J1") = N                                             '设置考号
-ActiveSheet.PrintOut                                        '打印当前表格
-Next N                                                      '下一个循环直到结束
+Dim startnum, loopnum, N As Long                                '定义变量：起始编码，打印份数和循环值
+startnum = Application.InputBox(Prompt:="起始号码？", Type:=1)  '定义起始号码
+loopnum = Application.InputBox(Prompt:="多少份？", Type:=1)     '定义打印份数
+For N = startnum To startnum + loopnum - 1                      '开始循环
+Range("J1") = N                                                 '设置考号
+ActiveSheet.PrintOut                                            '打印当前表格
+Next N                                                          '下一个循环直到结束
 End Sub
 ```
