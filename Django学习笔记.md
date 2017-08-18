@@ -43,11 +43,13 @@ sudo apt-get install nginx
 ### 配置Nginx
 ```Nginx
 upstream django {
+	# 声明socket位置，这里要注意文件权限问题
 	server unix:///tmp/uwsgi.sock;
 }
 
 server {
 	listen      80;
+	# 多个名字用空格分开
 	server_name .qingling.org 172.168.1.1;
    charset     utf-8;
 
@@ -63,3 +65,74 @@ server {
    }
 }
 ```
+
+#### Nginx的常用指令
+```
+sudo /etc/init.d/nginx restart
+cat /var/log/nginx/error.log
+```
+
+### 配置uwsgi
+```	INI
+[uwsgi]
+
+#The base directory
+chdir           = /home/kevin/repos/DjangoTutorial/
+module          = mysite.wsgi
+home            = /home/kevin/myenv
+chmod-socket    = 666
+
+master          = true
+processes       = 10
+socket          = /tmp/uwsgi.sock
+vacuum          = true
+```
+
+### 让uwsgi开机启动
+1. 编辑`/lib/systemd/system/rc-local.service`文件，加入`[Install]`那一段：
+
+	```
+	[Unit]
+	Description=/etc/rc.local Compatibility
+	ConditionFileIsExecutable=/etc/rc.local
+	After=network.target
+	
+	[Service]
+	Type=forking
+	ExecStart=/etc/rc.local start
+	TimeoutSec=0
+	RemainAfterExit=yes
+	GuessMainPID=no
+	
+	[Install]
+	WantedBy=multi-user.target
+	```
+
+2. 编辑`/etc/rc.local`文件，加入启动指令：
+
+	```Shell
+	#!/bin/sh -e
+	#
+	# rc.local
+	#
+	# This script is executed at the end of each multiuser runlevel.
+	# Make sure that the script will "exit 0" on success or any other
+	# value on error.
+	#
+	# In order to enable or disable this script just change the execution
+	# bits.
+	#
+	# By default this script does nothing.
+	/home/kevin/.local/bin/uwsgi --ini /etc/uwsgi/apps-enabled/DjangoTutorial.ini &
+	exit 0
+	```
+3. 启动`rc-local`
+
+	```
+	sudo chmod +x /etc/rc.local
+	sudo systemctl enable rc-local
+	
+	#下面的是一些常用指令
+	sudo systemctl start rc-local
+	sudo systemctl status rc-local
+	```
