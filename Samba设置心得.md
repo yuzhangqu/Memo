@@ -42,3 +42,15 @@ systemctl restart smbd.service nmbd.service
 
 ## 解决GROUP没有写权限的问题
 编辑`/etc/login.defs`，将`UMASK	`设置为`002`
+
+## 光驱
+```
+[cdrom]
+    comment = qlserver cdrom
+    path = /mnt/cdrom
+    guest ok = yes
+    read only = yes
+    browseable = yes
+    root preexec = /bin/mount -t auto /dev/cdrom /mnt/cdrom
+    root postexec = /bin/umount /mnt/cdrom
+```
