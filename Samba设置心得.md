@@ -54,3 +54,6 @@ systemctl restart smbd.service nmbd.service
     root preexec = /bin/mount -t auto /dev/cdrom /mnt/cdrom
     root postexec = /bin/umount /mnt/cdrom
 ```
+
+## `mount`远端Samba目录到本机
+`mount -t cifs -o user=xxx //IP/path/to/folder /mnt/point`
