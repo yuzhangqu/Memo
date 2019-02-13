@@ -123,7 +123,7 @@ vacuum          = true
 	# bits.
 	#
 	# By default this script does nothing.
-	/home/kevin/.local/bin/uwsgi --ini /etc/uwsgi/apps-enabled/DjangoTutorial.ini &
+	/home/kevin/.local/bin/uwsgi --touch-reload /tmp/reload.txt --ini /etc/uwsgi/apps-enabled/DjangoTutorial.ini &
 	exit 0
 	```
 3. 启动`rc-local`
