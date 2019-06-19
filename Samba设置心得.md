@@ -57,3 +57,11 @@ systemctl restart smbd.service nmbd.service
 
 ## `mount`远端Samba目录到本机
 `mount -t cifs -o user=xxx //IP/path/to/folder /mnt/point`
+
+## 解决SELinux只能看到目录却看不到文件的问题
+```
+chcon -Rt samba_share_t /path/to/share
+```
+
+## 其他注意事项
+- 不要把要共享的目录放在`/root`下面
