@@ -1,5 +1,4 @@
 # 有用的Linux命令
-
 - `init 3` 切换到文本模式
 - `init 5` 切换到图形模式
 - `runlevel` 查看最近两次的运行模式
@@ -29,12 +28,35 @@
 - `!STRING` 重复前一个以STRING开头的命令
 - `!$:p/!*:p` 打印上一条命令的最后一个参数/所有参数
 - `!:gs/S1/S2` 将上一条命令的S1替换为S2执行
+- `rm -- -a` 删除以`-`开头的文件
+- `basename/dirname` 取出路径的基名和目录名
+- `stat` 查看文件或文件系统的状态信息
+- `file` 分析文件类型
+- `>、2>、&>、2>&1`STDOUT、STDERR、所有输出重定向、STDERR重定向到STDOUT
+- `tr` 从字符集合1映射到集合2, `tr -d` 删除字符集合1中的字符, `-c`选项用字符集合1的补集, `-s`去重
+- `tee` 多重重定向
+- `locate/updatedb` 搜索文件/更新搜索索引数据库
+- `find [OPTION]... [搜索路径] [搜索条件] [处理动作]` 实时查找工具, `-name`按文件名, `-type`按文件类型
+- `chfn/chsh/chage` 更改用户信息/更改用户SHELL/更改用户有效期信息
+- `getent database key` 获取database里面主键为key的一行
+- `groupmems -a USERNAME -g GROUPNAME` 将用户加到组里
+- `newgrp GROUPNAME` 登陆到新的组作为主组
+- `passwd/gpasswd` 更改用户/组的密码
+- `vipw/vigr/pwck/grpck` 编辑`pwsswd`文件/编辑`group`文件/检查`pwsswd`文件/检查`group`文件
+- `useradd/usermod/userdel` 用户管理命令
+- `groupadd/groupmod/groupdel` 组管理命令
+- `su [-] USERNAME -c 'COMMAND'` 切换用户
+- `chown/chgrp/chmod` 更改所有者/组/权限
+- `chattr +i/chattr +a/lsattr` 增加`immutable`属性/文件只能追加/列出扩展属性
+- `getfacl/setfacl -m ACL/setfacl -x ACL/setfacl -k/setfacl -b` 获取/修改/删除/清除默认/清空文件的ACL权限(ACL形如`[d]:u/g:USERNAME:rwx`)
+- `getfacl file1 | setfacl --set-file=- file2` 复制file1的ACL权限到file2
 
 # 系统变量
 - `$SHELL` 当前的shell
 - `PS1` 命令提示符格式
 - `$LANG` 系统语言,保存在`/etc/locale.conf`文件中,可通过`localectl set-locale LANG=XXX`修改
-- `	$HISTSIZE` 历史命令缓存大小,可在`/etc/profile`中修改
+- `$HISTSIZE` 历史命令缓存大小,可在`/etc/profile`中修改
+- `$PWD/$OLDPWD` 当前目录/上次目录
 
 # Tips
 - uid为0、提示符为`#`是超级用户，uid非0、提示符为`$`是普通用户
@@ -54,3 +76,22 @@
 - `/etc/motd`是登陆后显示内容,`/etc/issue`是登陆前显示内容
 - `Ctrl + a`光标移到命令行首,`Ctrl + e`移到行尾
 - `Ctrl + u`删除到行首,`Ctrl + k`删除到行尾,`Alt + r`删除整行
+- `www.pathname.com/fhs`里面有目标的存放标准
+- Linux下的文件类型:`-`普通文件,`d`目录文件,`b`块设备,`c`字符设备,`l`符号链接文件,`p`管道文件,`s`套接字文件
+- 在`/misc`目录下进入隐藏的`cd`子目录,即可访问光盘的信息
+- `atime`读取时间,`mtime`内容修改的时间,`ctime`元数据修改的时间
+- `~-`前一个工作目录,`^`在通配符中表示排除
+- `man 7 glob`可查看预定义的通配符
+- `cp -a`可以保留文件各种属性
+- 软链接 vs 硬链接：同一个文件？跨分区？链接数增加？原始文件删除，链接可访问？文件大小？支持目录？相对的路径？
+- `set -C/+C`禁止/允许文件覆盖
+- `cat > f1 << EOF` 多行重定向
+- `|&`标准输出和错误输出都通过管道, 管道中的`-`用来当做临时文件(`tar -cvf - /home | tar -xvf -`)
+- `/etc/passwd、/etc/group、/etc/shadow、/etc/gshadow` 用户信息、组信息、用户密码(密码前的`!`表示禁用)、组密码
+- 启动菜单按`e`进入，找到`linux16`那行，添加`init=/bin/bash`，按`ctrl+x`启动。运行`mount -o rw,remount /`开启读写
+- `/etc/default/useradd、/etc/skel/*、/etc/login.defs`是新建用户相关的文件，`newusers/chpasswd`批量新建用户/修改用户口令
+- `umask` 通过掩码形式生成默认权限(文件用`666`减, 文件夹用`777`减)
+- `SUID` 在所有者的执行权限位置,`s`在二进制文件上可在运行时拥有程序所有者的权限。通过`chmod u+s`或`chmod 4777`添加
+- `SGID` 在所属组的执行权限位置,`s`在二进制文件上可在运行时拥有程序所属组的权限,`s`在目录上可使该目录下创建的文件都是该目录的组。通过`chmod g+s`或`chmod 2777`添加
+- `Sticky` 在其他人的执行权限位置,`t`在目录上只有文件的所有者和`root`才能删除该目录下的文件。通过`chmod o+t`或`chmod 1777`添加
+- 设置了ACL权限之后，传统的组权限移到ACL里面，取而代之的是`mask`权限。`mask`是用户、组的最大权限，可通过`setfacl -m mask::rwx/chmod g=rwx`来设置
