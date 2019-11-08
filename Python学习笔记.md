@@ -100,7 +100,7 @@
         even_squares = [x ** 2 for x in nums if x % 2 == 0]
         print(even_squares)  # Prints "[0, 4, 16]"
         ```
-- Dictionary
+- Dictionary：存放键值对
     ```python
     d = {'cat': 'cute', 'dog': 'furry'}  # Create a new dictionary with some data
     print(d['cat'])       # Get an entry from a dictionary; prints "cute"
@@ -113,6 +113,60 @@
     del d['fish']         # Remove an element from a dictionary
     print(d.get('fish', 'N/A')) # "fish" is no longer a key; prints "N/A"
     ```
+    - Loops
+        ```python
+        d = {'person': 2, 'cat': 4, 'spider': 8}
+        for animal in d:
+            legs = d[animal]
+            print('A %s has %d legs' % (animal, legs))
+        # Prints "A person has 2 legs", "A cat has 4 legs", "A spider has 8 legs"
+
+        for animal, legs in d.items():
+            print('A %s has %d legs' % (animal, legs))
+        # Prints "A person has 2 legs", "A cat has 4 legs", "A spider has 8 legs"
+        ```
+    - Dictionary comprehensions
+        ```python
+        nums = [0, 1, 2, 3, 4]
+        even_num_to_square = {x: x ** 2 for x in nums if x % 2 == 0}
+        print(even_num_to_square)  # Prints "{0: 0, 2: 4, 4: 16}"
+        ```
+- Set：元素的无序集合
+    ```python
+    animals = {'cat', 'dog'}
+    print('cat' in animals)   # Check if an element is in a set; prints "True"
+    print('fish' in animals)  # prints "False"
+    animals.add('fish')       # Add an element to a set
+    print('fish' in animals)  # Prints "True"
+    print(len(animals))       # Number of elements in a set; prints "3"
+    animals.add('cat')        # Adding an element that is already in the set does nothing
+    print(len(animals))       # Prints "3"
+    animals.remove('cat')     # Remove an element from a set
+    print(len(animals))       # Prints "2"
+    ```
+    - Loops：和List的遍历类似，但注意Set中的元素是无序的
+        ```python
+        animals = {'cat', 'dog', 'fish'}
+        for idx, animal in enumerate(animals):
+            print('#%d: %s' % (idx + 1, animal))
+        # Prints "#1: fish", "#2: dog", "#3: cat"
+        ```
+    - Set comprehensions
+        ```python
+        from math import sqrt
+        nums = {int(sqrt(x)) for x in range(30)}
+        print(nums)  # Prints "{0, 1, 2, 3, 4, 5}"
+        ```
+- Tuple：是不可修改的、有序的、值的列表。(可以作为Dictionary的键, 可以作为Set的元素)
+    ```python
+    d = {(x, x + 1): x for x in range(10)}  # Create a dictionary with tuple keys
+    t = (5, 6)        # Create a tuple
+    print(type(t))    # Prints "<class 'tuple'>"
+    print(d[t])       # Prints "5"
+    print(d[(1, 2)])  # Prints "1"
+    ```
+
+# 函数
 
 # Python和Sublime的整合
 - 在Sublime中执行Python代码，`ctrl + b` 自动在Sublime内置的控制台中执行  
