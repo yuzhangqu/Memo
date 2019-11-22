@@ -10,12 +10,11 @@
 2. `crontab MyCrontab`装载
 3. `crontab -l`查看
 
-## API获取IP地址
-http://ip.chinaz.com/getip.aspx
-
-```JSON
-{
-	ip:'121.60.106.130',
-	address:'湖北省武汉市 电信'
-}
+## python2.7获取IP地址
+```python
+def GetLocalIP():
+    req = urllib2.Request("http://ip.cn", headers={"User-Agent" : "Magic Browser"})
+    IPInfo = urllib2.urlopen(req).read()
+    IP = re.findall(r"\d+\.\d+\.\d+\.\d+", IPInfo)[0]
+    return IP
 ```
