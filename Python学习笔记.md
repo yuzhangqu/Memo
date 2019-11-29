@@ -27,6 +27,7 @@
     - 可用`len()`方法取长度
     - `str()`可将其他类型转成字符串
     - `input(STR)`函数可以读取用户输入的字符串作为返回值。`STR`为提示文本
+    - `r`前缀代表原始字符串（屏蔽转义）
 - 空值
     - `None`
 
@@ -62,7 +63,9 @@
 - for循环：
     ```python
     for ITERATING_VAR in SEQUENCE:
-        EXP
+        EXP1
+    else:
+        EXP2
     ```
 - `pass`可作为占位符，`continue`、`break`作用不赘述
 
@@ -230,6 +233,7 @@
     - `*b`：会将所有**位置实参**保存在一个Tuple中(Bare Star参数`*`不接受位置实参)，注意此时不`b`能再作为关键字参数
     - 此时`c`必须通过关键字参数传递
     - `**d`：将接收所有未定义的关键字参数，保存在字典中
+    - python3.8引入了`/`，在`/`之前的参数只能通过位置参数传递
 - 参数解包：传递实参时，在序列前加`*`，可将序列中的元素解包传给位置参数；字典前加`**`，可以将字典解包传给关键字参数(字典用`*`解包，只解出key)
 - 文档字符串：形参名后面跟`:TYPE`可说明形参需要的类型，函数头的`:`前写`-> TYPE`可说明函数返回值类型，在函数内部可用`'''`多行编写注释。可用help(FUNC)打印出来。
 - 作用域：全局作用域、函数作用域。函数内部使用`global VAR`，其后对该变量的引用都是全局变量。
@@ -325,9 +329,91 @@
 - 还有很多运算符的特殊方法，不赘述了，根据需要实现
 
 # 模块和包
-- 可以多次引入同一个模块，但是模块的实例只会创建一次
-- 模块引入：`import 模块名[ as 别名]`，模块名就是文件名
-- 可以通过`__name__`获取模块的名字，主模块的名字固定为`__main__`
+- 模块
+    - 可以多次引入同一个模块，但是模块的实例只会创建一次
+    - 模块引入：`import 模块名[ as 别名]`，模块名就是文件名
+    - 可以通过`__name__`获取模块的名字，主模块的名字固定为`__main__`
+- 包：也是一个模块。
+    - 普通模块是一个文件，而包是一个文件夹。
+    - 包引入：`import 包名`
+    - 包的子模块引入：`from 包名 import 子模块名`
+    - `__init__.py`：包中的此文件会在引入包或包的子模块时执行
+    - `__pycache__`：存放编译之后的缓存文件
+
+# 标准库
+- sys：访问解释器的变量、与解释器交互
+    - `sys.argv`：命令行的参数
+    - `sys.modules`：已加载的模块
+    - `sys.path`：模块的搜索路径，第一个元素是被执行的脚本所在的目录
+    - `sys.platform`：判断兼容性时用
+    - `sys.exit('MSG')`：退出程序
+- os：提供操作系统相关的功能
+    - `os.environ`：系统环境变量
+    - `os.system(command)`：可以执行操作系统的命令
+- pprint：提供美观的打印
+    - `pprint.pprint()`
+
+# 异常
+```python
+try:
+    pass
+except NameError as e:  # 捕获NameError类型的异常，对象绑定到e
+    pass
+except IndexError:  # 捕获IndexError类型的异常
+    pass
+except:  # 捕获其他类型的异常，等同于except Exception
+    pass
+else:  # 程序正常时执行下面的代码块
+    pass
+finally:  #无论是否有异常都执行
+    pass
+```
+- `try`语句是必须的
+- `except`和`finally`必须要有一个
+- `else`可有可无
+- 所有异常都是BaseException的子类
+- 绝大多数异常都是Exception的子类
+- 自定义的异常建议继承Exception类
+- `raise Exception('MSG')`：抛出异常
+
+# 文件
+- 打开文件
+    - `open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)`
+    - 打开文本文件一般指定编码为`'utf-8'`
+    - 默认模式(`'r'`)或`'r+'`模式，文件不存在时打开会报错
+- 读取文件：
+    - `file_obj.read(size=-1, /)`：接受一个位置参数，表示要读取的字符数（换行符也算一个）
+    - 不够要求的字符数则读到EOF
+    - 参数为负数或省略，则读取到EOF
+    - 直接读到EOF则返回空串
+    - `file_obj.readline(size=-1, /)`：读取一整行（包括最后换行符），参数同上，如果参数大于当前行的总字符数，也只会读完这一行
+    - `file_obj.readlines(hint=-1, /)`：读取多行，返回一个字符串list。如果读取一行之后字符数超过`hint`，则读取结束
+    - file_obj也是可以迭代的，迭代的每一个元素为一行
+- 写入文件
+    - `'w'`或`'w+'`模式：一打开就会清空内容
+    - `'a'`或`'a+'`模式：追加模式
+    - `'x'`或`'x+'`模式：新建文件，文件已存在则报错
+    - 没`+`都是不能读的
+- 二进制文件
+    - 模式后加`b`
+    - 二进制模式下读取长度参数以字节为单位
+- 位置控制
+    - `file_obj.tell()`：获取当前的流位置
+    - `file_obj.seek(cookie, whence=0, /)`：改变流位置，第一个参数是字节偏移量；第二个参数为0表示相对开头，为1表示相对当前位置，为2表示相对末尾
+    - utf-8编码下中文占3个字节
+- 关闭文件：`file_obj.close()`，手动关闭容易遗漏，最佳实践是使用`with语句`
+    ```python
+    with open(file_name) as file_obj
+        print(file_obj.read())
+    ```
+- 其他操作
+    - `os.listdir(path=None)`：获取指定路径的目录结构，返回一个字符串的list，每一个元素是目录下的文件或子目录
+    - `os.getcwd()`：获取当前目录
+    - `os.chdir(path)`：切换到指定目录
+    - `os.mkdir(path)`：创建目录，目录存在会报错
+    - `os.rmdir(path)`：删除目录，目录非空会报错
+    - `os.remove(path)`：删除文件
+    - `os.rename(src, dst)`：其实是类似于Linux的mv操作
 
 # Numpy
 
