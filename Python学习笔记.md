@@ -28,6 +28,8 @@
     - `str()`可将其他类型转成字符串
     - `input(STR)`函数可以读取用户输入的字符串作为返回值。`STR`为提示文本
     - `r`前缀代表原始字符串（屏蔽转义）
+    - `str.split(sep=None, maxsplit=-1)`：按照分隔符分割，返回一个list
+    - `str.partition(sep)`：按照第一个出现分隔符分割，返回一个3-Tuple
 - 空值
     - `None`
 
@@ -240,7 +242,7 @@
 - 命名空间：一个存储变量的字典。`locals()`可以获取当前作用域的命名空间，`globals()`可以获取全局作用域的命名空间。
 - 高阶函数：接受函数作为参数或者返回函数的函数。
     - `filter(function, iterable)`
-    - `map(function, iterable)`函数
+    - `map(function, iterable)`函数，返回一个能yield结果的迭代器，惰性求值
     - `sorted(iterable, *, key=None, reverse=False)`，效果同`list.sort()`，但是这个内置函数可以用于其他数据类型，返回一个list
 - lambda表达式：lambda 参数列表:返回值
 - 闭包：外部函数将内部函数作为返回值返回形成的。闭包可以访问外部函数的局部变量
@@ -263,7 +265,7 @@
         pass
     ```
     - 带参数的装饰器会立刻执行，只要返回结果还是一个装饰器就可以继续装饰函数
-    - 类装饰器：类的构造函数（`__init__`）接受被装饰函数作为参数，实例化对象赋值给被装饰函数。重载`__call__`函数达到装饰器效果
+    - 类装饰器：类的构造函数（`__init__`）接受被装饰函数作为参数，实例化对象绑定给被装饰函数。重载`__call__`函数达到装饰器效果
     - 带参数的类装饰器：类的构造函数接受参数保存起来，重载`__call__`函数接受被装饰函数作为参数返回一个函数
     - 被`@property`装饰的函数不再是个函数，而是`property`对象。
     ```python
@@ -326,6 +328,7 @@
 - 如果比较操作符右边的操作数是左边的子类，则子类中相应的反射函数（`__lt__`和`__le__`是`__gt__`和`__ge__`的反射，`__eq__`和`__ne__`都是自身的反射）优先
 - `__len__(self)`：函数`len()`调用，建议返回一个非负数，表示对象的长度。
 - `__bool__(self)`：函数`bool()`调用，或者真值检测时自动调用。如果没实现，则调用`__len__`，根据结果是否为0检测真值。如果都没实现，所有实例都是真
+- `__iter__(self)`：在需要容器的迭代器的时候被调用，返回一个可迭代的对象（`yield from`）
 - 还有很多运算符的特殊方法，不赘述了，根据需要实现
 
 # 模块和包
@@ -352,6 +355,19 @@
     - `os.system(command)`：可以执行操作系统的命令
 - pprint：提供美观的打印
     - `pprint.pprint()`
+- logging：日志
+    - 日志级别由低到高：`NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL`
+    - root logger默认是WARNING级别
+    - `logging.basicConfig(format=FORMAT, level=logging.INFO)`
+    - 内置`%(asctime)s %(message)s`等
+- threading：多线程
+    - `threading.Thread(group=None, target=None, name=None, args=(), kwargs={}, *, daemon=None)`：创建线程
+    - `start()`：开始线程活动
+    - `run()`：线程的活动代码
+    - `treading.Event().wait(TIMEOUT)`：通过线程的方式等待一段时间
+- datetime：日期
+    - `datetime.datetime.now()`
+    - `time.strftime(format)`：%Y/%m/%d-%H:%M:%S
 
 # 异常
 ```python

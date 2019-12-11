@@ -27,7 +27,7 @@ pip install Django
 
 ## 创建项目
 ```Shell
-django-admin startproject mysite
+django-admin startproject mysite .
 ```
 
 ## 部署项目
@@ -96,14 +96,14 @@ vacuum          = true
 	Description=/etc/rc.local Compatibility
 	ConditionFileIsExecutable=/etc/rc.local
 	After=network.target
-	
+
 	[Service]
 	Type=forking
 	ExecStart=/etc/rc.local start
 	TimeoutSec=0
 	RemainAfterExit=yes
 	GuessMainPID=no
-	
+
 	[Install]
 	WantedBy=multi-user.target
 	```
