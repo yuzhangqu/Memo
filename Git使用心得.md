@@ -19,3 +19,8 @@ git push
 git clean -df
 git reset --hard
 ```
+
+## 回退文件到某个版本
+```bash
+git checkout VERSION -- file1/to/restore file2/to/restore
+```
