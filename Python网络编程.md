@@ -129,10 +129,11 @@ with make_server('0.0.0.0', 8000, demo_app) as httpd:
     - wsgify
     ```python
     # wsgify是一个类装饰器，将实例绑定到app上
-    # wsgify实现了__call__魔术方法，可接收两个参数：environ和start_response
-    # 被装饰函数可以是Response的实例，也可以是str类型（会按照给定编码转成bytes）或bytes类型（会创建一个实例并将bytes写入body中）
-    # 装饰器实例的调用返回值是resp(environ, start_response)
-    # Response实现了__call__魔术方法，满足了wsgi的接口要求（调用start_response并返回可迭代对象）
+    # wsgify实现了__call__魔术方法，满足wsgi协议，接收参数：environ和start_response
+    # wsgify的__call__魔术方法利用environ构建Request实例，并调用被装饰函数
+    # 被装饰函数可以直接返回Response的实例，也可以是str类型（会按照给定编码转成bytes）或bytes类型（会创建一个实例并将bytes写入body中），最终都会返回Response的实例
+    # wsgify的__call__魔术方法调用Response实例并返回：return resp(environ, start_response)
+    # Response的__call__魔术方法，满足了wsgi的接口要求（调用start_response并返回可迭代对象）
     from webob.dec import wsgify
     @wsgify
     def app(request):
