@@ -159,6 +159,9 @@
         nums = [0, 1, 2, 3, 4]
         even_num_to_square = {x: x ** 2 for x in nums if x % 2 == 0}
         print(even_num_to_square)  # Prints "{0: 0, 2: 4, 4: 16}"
+
+        query_string = 'id=1&name=tom&age=26'
+        d = {k:v for k,_,v in map(lambda x : x.partition('='), query_string.split('&'))}
         ```
 - Set：元素的无序集合
     - 只能存储不可变对象(可哈希的类型)
@@ -368,6 +371,11 @@
 - datetime：日期
     - `datetime.datetime.now()`
     - `time.strftime(format)`：%Y/%m/%d-%H:%M:%S
+- json：JSON相关库
+    - `load`：将支持read()的类文件对象转成JSON
+    - `loads`：将str或bytes转成JSON
+    - 一般来说，JSON的`object`转成Python的`dict`
+    - JSON字符串要使用双引号
 
 # 异常
 ```python

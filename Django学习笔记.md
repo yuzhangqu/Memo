@@ -81,6 +81,18 @@ class XXX(models.Model):
     字段名 = models.XXXField(kwargs)
 ```
 
+### 模型操作
+- Django会为模型类提供一个objects对象：类型是`django.db.models.manager.Manager`，是进行数据库查询操作的接口
+- 查询
+    + 查询会返回结果的集，类型是`django.db.models.query.QuerySet`
+    + 是惰性求值的：创建结果集不会访问数据库，在迭代、序列化、if语句中会立即求值
+    + 每一个结果集都包含一个缓存：要利用缓存，需要多次使用同一个结果集。
+    + 是可迭代对象
+    + XXX.objects.all()：返回所有结果
+    + 结果集可切片[b,e]：等价于在SQL语句中加`LIMIT e-b OFFSET b`
+    + XXX.objects.filter(k=v)：按条件过滤
+- QuerySet中的query属性是对应的查询字符串
+
 ### 注册模型
 ```python
 from .models import XXX
@@ -170,11 +182,17 @@ def xxx_view(request, post_id):
         </ul>
         ```
 
+### RESTful API
+Django一般用作后端数据处理，不使用模板，只接收和处理JSON数据。浏览器提交的JSON数据在请求对象的body中。可使用simplejson解析。
+
 ### 迁移文件
 ```
 python manage.py makemigrations
 python manage.py migrate
 ```
+
+### 禁用CSRF
+基于前后端分离的原则，Django仅用于底层API调用，因此CSRF不需要在这一层配置。禁用方法：在settings.py文件屏蔽MIDDLEWARE中的`django.middleware.csrf.CsrfViewMiddleware`
 
 ### 本地化
 ```python
