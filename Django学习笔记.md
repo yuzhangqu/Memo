@@ -90,8 +90,28 @@ class XXX(models.Model):
     + 是可迭代对象
     + XXX.objects.all()：返回所有结果
     + 结果集可切片[b,e]：等价于在SQL语句中加`LIMIT e-b OFFSET b`
-    + XXX.objects.filter(k=v)：按条件过滤
+    + XXX.objects.filter(k=v)：按条件过滤，可串联写。参数`pk`代表主键
+    + XXX.objects.orderby()
+    + XXX.objects.values()
+    + XXX.objects.get(kwargs)：一般用来主键查询
+    + XXX.objects.count()
+    + XXX.objects.first()
+    + XXX.objects.last()
+    + XXX.objects.exist()
 - QuerySet中的query属性是对应的查询字符串
+- 字段查询表达式：可以作为`filter()`、`exclude()`、`get()`的参数，实现where子句
+    + 语法：`属性(字段)名字__运算符=值`
+    + exact
+    + contains
+    + startswith
+    + endswith
+    + isnull
+    + isnotnull
+    + iexact、icontains、istartswith、iendswith：忽略大小写版本
+    + in：在范围中
+    + gt、gte、lt、lte
+    + year、month、day、week_day、hour、minute、second：对日期类型的处理
+- Q对象：可以使用&、|、~
 
 ### 注册模型
 ```python
@@ -181,6 +201,7 @@ def xxx_view(request, post_id):
         {% endfor %}
         </ul>
         ```
+    5. 
 
 ### RESTful API
 Django一般用作后端数据处理，不使用模板，只接收和处理JSON数据。浏览器提交的JSON数据在请求对象的body中。可使用simplejson解析。
