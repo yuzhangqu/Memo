@@ -10,8 +10,3 @@
 ```
 netsh winhttp set proxy IP:PORT
 ```
-
-# Git设置代理
-```
-git config --global http.proxy IP:PORT
-```
