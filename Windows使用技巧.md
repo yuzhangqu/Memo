@@ -9,4 +9,5 @@
 # Windows CMD设置代理
 ```
 netsh winhttp set proxy IP:PORT
+netsh winhttp reset proxy
 ```
