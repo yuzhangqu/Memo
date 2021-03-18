@@ -24,3 +24,9 @@ git reset --hard
 ```bash
 git checkout VERSION -- file1/to/restore file2/to/restore
 ```
+
+
+# 设置代理
+```
+git config --global http.proxy IP:PORT
+```
