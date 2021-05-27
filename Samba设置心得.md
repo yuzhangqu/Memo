@@ -63,5 +63,9 @@ systemctl restart smbd.service nmbd.service
 chcon -Rt samba_share_t /path/to/share
 ```
 
+## 解决Windows 10无法访问的问题
+- 添加 SMB 1.0/CIFS 文件共享支持
+- 在HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters中添加名称为AllowInsecureGuestAuth的DWORD(32)位值为1的项
+
 ## 其他注意事项
 - 不要把要共享的目录放在`/root`下面
