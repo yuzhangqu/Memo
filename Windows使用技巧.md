@@ -11,3 +11,24 @@
 netsh winhttp set proxy IP:PORT
 netsh winhttp reset proxy
 ```
+
+# 安装SSH服务端
+```
+// 检查OpenSSH安装情况
+Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'
+
+// 安装OpenSSH服务端
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+
+// 启动sshd服务
+Start-Service sshd
+
+// 检查sshd服务状态
+Get-Service sshd
+
+// 设置sshd服务开机启动
+Set-Service -Name sshd -StartupType 'Automatic'
+
+// 设置ssh的默认shell
+New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"  -PropertyType String -Force
+```
