@@ -51,6 +51,7 @@
 - `getfacl/setfacl -m ACL/setfacl -x ACL/setfacl -k/setfacl -b` 获取/修改/删除/清除默认/清空文件的ACL权限(ACL形如`[d]:u/g:USERNAME:rwx`)
 - `getfacl file1 | setfacl --set-file=- file2` 复制file1的ACL权限到file2
 - `ss -tn` 显示并发连接
+- `binwalk -D 'png image:png' file1` 从file1里面解出隐藏的png图片
 
 # 系统变量
 - `$SHELL` 当前的shell
