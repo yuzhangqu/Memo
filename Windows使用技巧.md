@@ -32,3 +32,9 @@ Set-Service -Name sshd -StartupType 'Automatic'
 // 设置ssh的默认shell
 New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"  -PropertyType String -Force
 ```
+
+# 修复损坏的U盘
+```
+chkdsk I: /f
+chkdsk I: /r
+```
