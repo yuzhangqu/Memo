@@ -38,3 +38,9 @@ New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Wi
 chkdsk I: /f
 chkdsk I: /r
 ```
+
+# SVN实现Git stash功能
+```
+svn diff > patch_name.patch
+patch -p0 < patch_name.patch
+```
