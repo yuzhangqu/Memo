@@ -112,3 +112,6 @@ for (int i = 0; i < 100; ++i) {
 
 # 宏展开
 - 参数涉及到`#`或`##`操作，那么参数的宏不会在此操作之前展开
+
+# 查看Class布局
+- `cl FILENAME -d1reportSingleClassLayoutXXX`
