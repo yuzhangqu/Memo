@@ -69,3 +69,6 @@ chcon -Rt samba_share_t /path/to/share
 
 ## 其他注意事项
 - 不要把要共享的目录放在`/root`下面
+
+## 解决密码输入正确但无法登陆的问题
+- 重启Workstation服务
