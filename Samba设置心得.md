@@ -19,9 +19,14 @@ cut -d: -f1 /etc/group		// 列出所有组
 usermod -g GROUP username	// 更改用户的组
 ```
 
-## 将用户添加到Samba
+## 将用户添加到Samba(如果用户已经添加过，此命令为更改密码)
 ```bash
 smbpasswd -a username
+```
+
+## 列出所有Samba用户
+```bash
+pdbedit -L -v
 ```
 
 ## 配置Samba
